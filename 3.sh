@@ -30,16 +30,15 @@ formatsecs() {
 # Allow for listening to keystrokes in a non-blocking way
 stty -icanon time 0 min 0
 
-while [ "$input" != "s" ]; do
+while [ "$input" != "s" ] && [ "$input" != "S" ]; do
   read -s input # Read keystroke (non-blocking, see above), silent (-s) so it doesn't print the input
 
-  # TODO automatically convert input to lowercase
-  if [ "$input" = "s" ]; then
+  if [ "$input" = "s" ] || [ "$input" = "S" ]; then
     echo ""
     echo "Programa finalizado"
-  elif [ $executando = false ] && [ "$input" = "e" ]; then
+  elif [ $executando = false ] && { [ "$input" = "e" ] || [ "$input" = "E" ]; }; then
     executando=true
-  elif [ $executando = true ] && [ "$input" = "f" ]; then
+  elif [ $executando = true ] && { [ "$input" = "f" ] || [ "$input" = "F" ]; }; then
     executando=false
     clear
     echo "Status: PAUSADO"
@@ -47,11 +46,11 @@ while [ "$input" != "s" ]; do
   fi
 
   if [ $executando = true ]; then
-    clear # TODO instead of clearing, just replace the last line
+    clear
     echo "Status: EXECUTANDO"
     echo $(formatsecs $timer)
-    sleep 1 # wait a second
-    timer=$(($timer+1)) # increment timer
+    sleep 1 # Wait a second
+    timer=$(($timer+1)) # Increment timer
   fi
 done
 
