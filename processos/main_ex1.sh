@@ -13,6 +13,8 @@ echo "[-] Subtração"
 echo "[/] Divisão"
 echo "[*] Multiplicação"
 echo ""
+echo "[Q] Área do quadrado"
+echo ""
 echo "-----------------------------------------------"
 echo ""
 
@@ -27,4 +29,6 @@ elif [ "$OP" = "/" ]; then
   ./aritmetica/divisao.sh
 elif [ "$OP" = "*" ]; then
   ./aritmetica/multiplicacao.sh
+elif [ "$OP" = "Q" ]; then
+  ./geometrica/quadrado.sh
 fi
