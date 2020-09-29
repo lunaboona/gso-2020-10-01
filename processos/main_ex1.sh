@@ -21,4 +21,6 @@ RES=""
 
 if [ "$OP" = "+" ]; then
   ./ex1/adicao.sh
+elif [ "$OP" = "-" ]; then
+  ./ex1/subtracao.sh
 fi
