@@ -1,7 +1,7 @@
 #!/bin/bash
 
-echo "Área do círculo"
+echo "ÁREA DO CÍRCULO"
 
 VAL1=$( ./leitura.sh "NUMBER" "Insira o raio do círculo: " )
 
-./imprime.sh "A área do círculo com raio $VAL1 é de $(echo "scale=2; (3.14 * ($VAL1*$VAL1))"| bc)"
+./imprime.sh "A área do círculo de raio $VAL1 u.m. é $(echo "scale=2; (3.14 * ($VAL1*$VAL1))"| bc) u.m.²"
