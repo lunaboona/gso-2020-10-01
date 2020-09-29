@@ -25,4 +25,6 @@ elif [ "$OP" = "-" ]; then
   ./ex1/subtracao.sh
 elif [ "$OP" = "/" ]; then
   ./ex1/divisao.sh
+elif [ "$OP" = "*" ]; then
+  ./ex1/multiplicacao.sh
 fi
