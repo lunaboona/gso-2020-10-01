@@ -14,6 +14,7 @@ echo "[/] Divisão"
 echo "[*] Multiplicação"
 echo ""
 echo "[Q] Área do quadrado"
+echo "[T] Área do triangulo"
 echo ""
 echo "-----------------------------------------------"
 echo ""
@@ -31,4 +32,6 @@ elif [ "$OP" = "*" ]; then
   ./aritmetica/multiplicacao.sh
 elif [ "$OP" = "Q" ]; then
   ./geometrica/quadrado.sh
+elif [ "$OP" = "T" ]; then
+  ./geometrica/triangulo.sh
 fi
