@@ -23,4 +23,6 @@ if [ "$OP" = "+" ]; then
   ./ex1/adicao.sh
 elif [ "$OP" = "-" ]; then
   ./ex1/subtracao.sh
+elif [ "$OP" = "/" ]; then
+  ./ex1/divisao.sh
 fi
