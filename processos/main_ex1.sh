@@ -13,6 +13,10 @@ echo "[-] Subtração"
 echo "[/] Divisão"
 echo "[*] Multiplicação"
 echo ""
+echo "[Q] Área do quadrado"
+echo "[T] Área do triângulo"
+echo "[C] Área do círculo"
+echo ""
 echo "-----------------------------------------------"
 echo ""
 
@@ -20,5 +24,17 @@ OP=$( ./leitura.sh "STRING" "Selecione a operação: " )
 RES=""
 
 if [ "$OP" = "+" ]; then
-  ./ex1/adicao.sh
+  ./aritmetica/adicao.sh
+elif [ "$OP" = "-" ]; then
+  ./aritmetica/subtracao.sh
+elif [ "$OP" = "/" ]; then
+  ./aritmetica/divisao.sh
+elif [ "$OP" = "*" ]; then
+  ./aritmetica/multiplicacao.sh
+elif [ "$OP" = "Q" ]; then
+  ./geometrica/quadrado.sh
+elif [ "$OP" = "T" ]; then
+  ./geometrica/triangulo.sh
+elif [ "$OP" = "C" ]; then
+  ./geometrica/circulo.sh
 fi
