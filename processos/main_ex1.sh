@@ -20,11 +20,11 @@ OP=$( ./leitura.sh "STRING" "Selecione a operação: " )
 RES=""
 
 if [ "$OP" = "+" ]; then
-  ./ex1/adicao.sh
+  ./aritmetica/adicao.sh
 elif [ "$OP" = "-" ]; then
-  ./ex1/subtracao.sh
+  ./aritmetica/subtracao.sh
 elif [ "$OP" = "/" ]; then
-  ./ex1/divisao.sh
+  ./aritmetica/divisao.sh
 elif [ "$OP" = "*" ]; then
-  ./ex1/multiplicacao.sh
+  ./aritmetica/multiplicacao.sh
 fi
