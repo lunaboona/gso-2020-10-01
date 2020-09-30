@@ -46,8 +46,8 @@ checksoma() {
         cCONTCARTAS=$(($cCONTCARTAS+1))
         echo "CARTA $cCONTCARTAS: ${NOMESCARTAS[$C3]}" > /dev/tty
         cSOMA=$(($cSOMA+$C3))
-        echo "" > /dev/tty
         echo "Soma: $cSOMA" > /dev/tty
+        echo "" > /dev/tty
 
         cSOMA=$(checksoma $cSOMA $cCONTCARTAS)
         echo $(($cSOMA))
@@ -82,6 +82,15 @@ do
     fi
   done
 
+  PCINDEX=$(($NUMJOG+1))
+  PONTUACOES[$PCINDEX]=0
+  for CONT in $(seq $NUMJOG)
+  do
+    PONTUACOES[$CONT]=0
+  done
+
+  SKIPCPU=false
+
   for CONT in $(seq $NUMJOG)
   do
     echo ""
@@ -103,8 +112,8 @@ do
     echo "CARTA $CONTCARTAS: ${NOMESCARTAS[$C2]}"
     
     PONTUACOES[$CONT]=$(($C1+$C2))
-    echo ""
     echo "Soma: ${PONTUACOES[$CONT]}"
+    echo ""
 
     PONTUACOES[$CONT]=$(checksoma ${PONTUACOES[$CONT]} $CONTCARTAS)
 
@@ -116,9 +125,78 @@ do
       continue
     elif [ ${PONTUACOES[$CONT]} -eq 21 ];
     then
+      SKIPCPU=true
       break
     fi
   done
+
+  if [ $SKIPCPU = false ];
+  then
+    echo ""
+    echo "-----------------------------------------------"
+    echo ""
+    echo "VEZ DO CPU"
+    echo ""
+    echo "-----------------------------------------------"
+    echo ""
+
+    CONTCARTAS=0
+
+    C1=$(novacarta)
+    CONTCARTAS=$(($CONTCARTAS+1))
+    echo "CARTA $CONTCARTAS: ${NOMESCARTAS[$C1]}"
+
+    C2=$(novacarta)
+    CONTCARTAS=$(($CONTCARTAS+1))
+    echo "CARTA $CONTCARTAS: ${NOMESCARTAS[$C2]}"
+    
+    PONTUACOES[$PCINDEX]=$(($C1+$C2))
+    echo "Soma: ${PONTUACOES[$PCINDEX]}"
+    echo ""
+
+    IC=($(echo ${PONTUACOES[*]} | tr " " "\n" | cat -n | sort -k2,2nr | head -n1))
+    NUMVENCEDOR=${IC[0]}
+    if [ $NUMVENCEDOR -eq $PCINDEX ]; then
+      ISGREATEST=true
+    else
+      ISGREATEST=false
+    fi
+
+    until [ $ISGREATEST = true ];
+    do
+      C3=$(novacarta)
+      CONTCARTAS=$(($CONTCARTAS+1))
+      echo "CARTA $CONTCARTAS: ${NOMESCARTAS[$C3]}"
+      PONTUACOES[$PCINDEX]=$((${PONTUACOES[$PCINDEX]}+$C3))
+      echo "Soma: ${PONTUACOES[$PCINDEX]}"
+      echo ""
+
+      if [ ${PONTUACOES[$PCINDEX]} -gt 21 ];
+      then
+        echo "Você estourou, perdeu :("
+        PONTUACOES[$PCINDEX]=0
+        break
+      elif [ ${PONTUACOES[$PCINDEX]} -eq 21 ];
+      then
+        echo "Você ganhou, parabéns!!!"
+        break
+      else
+        IC=($(echo ${PONTUACOES[*]} | tr " " "\n" | cat -n | sort -k2,2nr | head -n1))
+        NUMVENCEDOR=${IC[0]}
+        echo "$NUMVENCEDOR"
+        if [ $NUMVENCEDOR -eq $PCINDEX ]; then
+          ISGREATEST=true
+        else
+          ISGREATEST=false
+        fi
+      fi
+    done
+  fi
+
+  sleep 2
+
+
+
 
   echo ""
   echo "-----------------------------------------------"
@@ -129,11 +207,17 @@ do
   do
     echo "JOGADOR $CONT: ${PONTUACOES[$CONT]}"
   done
+  echo "CPU: ${PONTUACOES[$PCINDEX]}"
   echo ""
   echo ""
   IC=($(echo ${PONTUACOES[*]} | tr " " "\n" | cat -n | sort -k2,2nr | head -n1))
   NUMVENCEDOR=${IC[0]}
-  echo "VENCEDOR É O JOGADOR $NUMVENCEDOR!!!!!"
+  if [ $NUMVENCEDOR -eq $PCINDEX ];
+  then
+    echo "VENCEDOR É O CPU!!!!!"
+  else
+    echo "VENCEDOR É O JOGADOR $NUMVENCEDOR!!!!!"
+  fi
   echo ""
   echo "-----------------------------------------------"
   echo ""
